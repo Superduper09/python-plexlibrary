@@ -454,6 +454,10 @@ class Recipe():
         logs.info(u"Created symlinks for {count} new items:".format(count=count))
         for item in new_items:
             logs.info(u"{title} ({year})".format(title=item.title, year=getattr(item, 'year', None)))
+        #Also Print
+        print(u"Created symlinks for {count} new items:".format(count=count))
+        for item in new_items:
+            print(u"{title} ({year})".format(title=item.title, year=getattr(item, 'year', None)))
 
     def _verify_new_library_and_get_items(self, create_if_not_found=False):
         # Check if the new library exists in Plex
@@ -648,6 +652,11 @@ class Recipe():
         for item in deleted_items:
             logs.info(u"{title} ({year})".format(title=item.title,
                                                  year=item.year))
+        #Also Print
+        print(u"Removed symlinks for {count} items.".format(count=count))
+        for item in deleted_items:
+            print(u"{title} ({year})".format(title=item.title,
+                                                 year=item.year))
 
     def _cleanup_new_library(self, new_library):
         # Scan the library to clean up the deleted items
@@ -746,6 +755,16 @@ class Recipe():
                 count=len(missing_items)))
             for idx, item in missing_items:
                 logs.info(u"{idx}\t{release}\t{imdb_id}\t{title} ({year})".format(
+                    idx=idx + 1, release=item.get('release_date', ''),
+                    imdb_id=item['id'], title=item['title'],
+                    year=item['year']))
+            # Also Print
+            print(u"Number of items in the new {library_or_playlist}: {count}".format(
+                count=list_count, library_or_playlist=('playlist' if self.use_playlists else 'library')))
+            print(u"Number of missing items: {count}".format(
+                count=len(missing_items)))
+            for idx, item in missing_items:
+                print(u"{idx}\t{release}\t{imdb_id}\t{title} ({year})".format(
                     idx=idx + 1, release=item.get('release_date', ''),
                     imdb_id=item['id'], title=item['title'],
                     year=item['year']))
